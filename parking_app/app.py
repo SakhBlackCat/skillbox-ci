@@ -205,7 +205,7 @@ def create_app():
         # Рассчитываем время парковки и стоимость (простая логика)
         parking_time = client_parking.time_out - client_parking.time_in
         parking_hours = parking_time.total_seconds() / 3600
-        cost = max(1, round(parking_hours * 50))  # 50 рублей в час, минимум 1 рубль
+        cost = max(1, round(parking_hours * 50))
 
         db.session.commit()
 
