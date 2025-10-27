@@ -3,7 +3,7 @@ from typing import Any, Dict
 from .app import db
 
 
-class Client(db.Model): # type: ignore
+class Client(db.Model):  # type: ignore
     __tablename__ = "client"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -21,7 +21,7 @@ class Client(db.Model): # type: ignore
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class Parking(db.Model): # type: ignore
+class Parking(db.Model):  # type: ignore
     __tablename__ = "parking"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -39,7 +39,7 @@ class Parking(db.Model): # type: ignore
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class ClientParking(db.Model): # type: ignore
+class ClientParking(db.Model):  # type: ignore
     __tablename__ = "client_parking"
 
     id = db.Column(db.Integer, primary_key=True)
