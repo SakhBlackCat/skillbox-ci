@@ -31,9 +31,7 @@ def create_app():
     @app.route("/clients/<int:client_id>", methods=["GET"])
     def get_client_handler(client_id: int):
         """Получение информации о клиенте по ID"""
-        client = db.session.get(
-            Client, client_id
-        )
+        client = db.session.get(Client, client_id)
         if not client:
             return jsonify({"error": "Клиент не найден"}), 404
         return jsonify(client.to_json()), 200

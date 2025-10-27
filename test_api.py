@@ -106,9 +106,7 @@ class TestAPI:
         assert "Успешный заезд на парковку" in response_data["message"]
 
         # Проверяем, что количество свободных мест уменьшилось
-        updated_parking = db_session.session.get(
-            Parking, sample_parking.id
-        ) 
+        updated_parking = db_session.session.get(Parking, sample_parking.id)
         assert updated_parking.count_available_places == initial_available_places - 1
 
         # Проверяем, что создалась запись о парковке
@@ -343,9 +341,7 @@ class TestFactoryBoyAPI:
         parking_instance = parking_factory()
 
         # Проверяем, что парковка создана в базе с правильными данными
-        created_parking = db_session.session.get(
-            Parking, parking_instance.id
-        )
+        created_parking = db_session.session.get(Parking, parking_instance.id)
         assert created_parking is not None
         assert created_parking.address == parking_instance.address
         assert created_parking.opened == parking_instance.opened
@@ -379,9 +375,7 @@ class TestFactoryBoyAPI:
         )
 
         # Проверяем создание в базе
-        created_parking = db_session.session.get(
-            Parking, closed_parking.id
-        )
+        created_parking = db_session.session.get(Parking, closed_parking.id)
         assert created_parking is not None
         assert created_parking.opened == False
         assert created_parking.count_places == 5
@@ -395,9 +389,7 @@ class TestFactoryBoyAPI:
             opened=True, count_places=100, address="ул. Большая, д. 1"
         )
 
-        created_large_parking = db_session.session.get(
-            Parking, large_parking.id
-        )
+        created_large_parking = db_session.session.get(Parking, large_parking.id)
         assert created_large_parking is not None
         assert created_large_parking.opened == True
         assert created_large_parking.count_places == 100
