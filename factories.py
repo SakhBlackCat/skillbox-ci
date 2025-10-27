@@ -26,7 +26,13 @@ class ClientFactory(SQLAlchemyModelFactory):
         )
     )
     car_number = factory.LazyFunction(
-        lambda: f"{fake.random_uppercase_letter()}{fake.random_number(digits=3)}{fake.random_uppercase_letter()}{fake.random_uppercase_letter()}{fake.random_number(digits=3)}"
+        lambda: (
+            f"{fake.random_uppercase_letter()}"
+            f"{fake.random_number(digits=3)}"
+            f"{fake.random_uppercase_letter()}"
+            f"{fake.random_uppercase_letter()}"
+            f"{fake.random_number(digits=3)}"
+        )
     )
 
 

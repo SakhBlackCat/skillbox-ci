@@ -76,7 +76,7 @@ class TestAPI:
         assert created_parking is not None
         assert created_parking.count_places == 50
         assert created_parking.count_available_places == 50
-        assert created_parking.opened == True
+        assert created_parking.opened is True
 
     def test_create_parking_validation(self, client):
         """Тестирование валидации при создании парковки"""
@@ -106,9 +106,7 @@ class TestAPI:
         assert "Успешный заезд на парковку" in response_data["message"]
 
         # Проверяем, что количество свободных мест уменьшилось
-        updated_parking = db_session.session.get(
-            Parking, sample_parking.id
-        ) 
+        updated_parking = db_session.session.get(Parking, sample_parking.id)
         assert updated_parking.count_available_places == initial_available_places - 1
 
         # Проверяем, что создалась запись о парковке
@@ -236,10 +234,10 @@ class TestAPI:
 
         # Проверяем, что наш тестовый клиент в списке
         client_found = any(
-            client["id"] == sample_client.id
-            and client["name"] == sample_client.name
-            and client["surname"] == sample_client.surname
-            for client in clients_list
+            client_item["id"] == sample_client.id
+            and client_item["name"] == sample_client.name
+            and client_item["surname"] == sample_client.surname
+            for client_item in clients_list
         )
         assert client_found
 
@@ -292,9 +290,7 @@ class TestFactoryBoyAPI:
         client_instance = client_factory()
 
         # Проверяем, что клиент создан в базе с правильными данными
-        created_client = db_session.session.get(
-            Client, client_instance.id
-        )  # Исправлено на современный метод
+        created_client = db_session.session.get(Client, client_instance.id)
         assert created_client is not None
         assert created_client.name == client_instance.name
         assert created_client.surname == client_instance.surname
@@ -343,9 +339,7 @@ class TestFactoryBoyAPI:
         parking_instance = parking_factory()
 
         # Проверяем, что парковка создана в базе с правильными данными
-        created_parking = db_session.session.get(
-            Parking, parking_instance.id
-        )
+        created_parking = db_session.session.get(Parking, parking_instance.id)
         assert created_parking is not None
         assert created_parking.address == parking_instance.address
         assert created_parking.opened == parking_instance.opened
@@ -379,15 +373,11 @@ class TestFactoryBoyAPI:
         )
 
         # Проверяем создание в базе
-        created_parking = db_session.session.get(
-            Parking, closed_parking.id
-        )
+        created_parking = db_session.session.get(Parking, closed_parking.id)
         assert created_parking is not None
-        assert created_parking.opened == False
+        assert created_parking.opened is False
         assert created_parking.count_places == 5
-        assert (
-            created_parking.count_available_places == 0
-        )  # Для закрытой парковки должно быть 0
+        assert created_parking.count_available_places == 0
         assert created_parking.address == "ул. Кастомная, д. 123"
 
         # Создаем открытую парковку с большим количеством мест
@@ -395,15 +385,11 @@ class TestFactoryBoyAPI:
             opened=True, count_places=100, address="ул. Большая, д. 1"
         )
 
-        created_large_parking = db_session.session.get(
-            Parking, large_parking.id
-        )
+        created_large_parking = db_session.session.get(Parking, large_parking.id)
         assert created_large_parking is not None
-        assert created_large_parking.opened == True
+        assert created_large_parking.opened is True
         assert created_large_parking.count_places == 100
-        assert (
-            created_large_parking.count_available_places == 100
-        )  # Для открытой парковки должно совпадать с count_places
+        assert created_large_parking.count_available_places == 100
 
 
 class TestFactoryBoyFeatures:
@@ -466,8 +452,8 @@ class TestFactoryBoyFeatures:
         client_names = set(client.name for client in clients)
         parking_addresses = set(parking.address for parking in parkings)
 
-        assert len(client_names) == 3  # Все имена должны быть уникальными
-        assert len(parking_addresses) == 2  # Все адреса должны быть уникальными
+        assert len(client_names) == 3
+        assert len(parking_addresses) == 2
 
     def test_factory_boy_without_session_persistence(
         self, client_factory, parking_factory

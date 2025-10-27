@@ -31,9 +31,7 @@ def create_app():
     @app.route("/clients/<int:client_id>", methods=["GET"])
     def get_client_handler(client_id: int):
         """Получение информации о клиенте по ID"""
-        client = db.session.get(
-            Client, client_id
-        )
+        client = db.session.get(Client, client_id)
         if not client:
             return jsonify({"error": "Клиент не найден"}), 404
         return jsonify(client.to_json()), 200
@@ -207,7 +205,7 @@ def create_app():
         # Рассчитываем время парковки и стоимость (простая логика)
         parking_time = client_parking.time_out - client_parking.time_in
         parking_hours = parking_time.total_seconds() / 3600
-        cost = max(1, round(parking_hours * 50))  # 50 рублей в час, минимум 1 рубль
+        cost = max(1, round(parking_hours * 50))
 
         db.session.commit()
 
