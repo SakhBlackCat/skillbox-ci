@@ -28,7 +28,7 @@ jobs:
         pip install pytest mypy black isort flake8
     
     - name: Run unit tests
-      run: pytest tests
+      run: pytest .
 
   mypy:
     runs-on: ubuntu-latest
